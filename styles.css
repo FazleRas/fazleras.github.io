@@ -17,8 +17,8 @@
     --bg: #0f1115;
     --text: #e6e8ec;
     --muted: #9aa3b2;
-    --accent: #9a9dff;
-    --accent-fg: #0f1115;
+    --accent: #616eff;
+    --accent-fg: #ffffff;
     --border: #262b35;
     --tag-bg: #1a1f29;
 
@@ -42,8 +42,8 @@
   --bg: #0f1115;
   --text: #e6e8ec;
   --muted: #9aa3b2;
-  --accent: #9a9dff;
-  --accent-fg: #0f1115;
+  --accent: #616eff;
+  --accent-fg: #ffffff;
   --border: #262b35;
   --tag-bg: #1a1f29;
 
@@ -310,6 +310,20 @@ h3 {
   padding: 2.75rem 0 0;
 }
 
+/* Sections fade up as they enter the viewport (script.js adds .in-view) */
+@media (prefers-reduced-motion: no-preference) {
+  :root.js main .section {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  :root.js main .section.in-view {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .section-label {
   margin: 0 0 1.5rem;
   font-size: 0.8rem;
@@ -373,6 +387,71 @@ h3 {
   padding-top: 1.25rem;
   border-top: 1px solid var(--border);
   font-size: 0.95rem;
+}
+
+/* ---------- Education / Activities ---------- */
+
+.entry {
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.entry-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.entry h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+
+.entry-meta {
+  color: var(--muted);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.entry p {
+  margin: 0.35rem 0 0;
+  max-width: 38rem;
+  color: var(--muted);
+}
+
+/* ---------- Skills ---------- */
+
+.skills {
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.skills div {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.skills dt {
+  font-size: 0.875rem;
+  font-weight: 650;
+  color: var(--muted);
+}
+
+.skills dd {
+  margin: 0;
+}
+
+@media (max-width: 480px) {
+  .skills div {
+    grid-template-columns: 1fr;
+    gap: 0.1rem;
+  }
 }
 
 /* ---------- Footer ---------- */

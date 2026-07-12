@@ -23,6 +23,26 @@ const introInner = document.querySelector(".intro-inner");
 const scrollCue = document.querySelector(".scroll-cue");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+// Section reveal: fade sections up as they enter the viewport.
+const sections = document.querySelectorAll("main .section");
+
+if ("IntersectionObserver" in window && !reduceMotion.matches) {
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+          io.unobserve(entry.target);
+        }
+      }
+    },
+    { rootMargin: "0px 0px -10% 0px" }
+  );
+  sections.forEach((s) => io.observe(s));
+} else {
+  sections.forEach((s) => s.classList.add("in-view"));
+}
+
 if (introInner && !reduceMotion.matches) {
   let ticking = false;
 
