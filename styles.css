@@ -424,33 +424,31 @@ h3 {
 
 /* ---------- Skills ---------- */
 
-.skills {
-  margin: 0;
+.skills-grid {
   display: grid;
-  gap: 0.75rem;
-}
-
-.skills div {
-  display: grid;
-  grid-template-columns: 8rem 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  align-items: baseline;
 }
 
-.skills dt {
-  font-size: 0.875rem;
+.skill-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem 1.25rem;
+}
+
+.skill-card h3 {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
   font-weight: 650;
-  color: var(--muted);
 }
 
-.skills dd {
-  margin: 0;
+.skill-card .tags {
+  margin-top: 0 !important;
 }
 
-@media (max-width: 480px) {
-  .skills div {
+@media (max-width: 560px) {
+  .skills-grid {
     grid-template-columns: 1fr;
-    gap: 0.1rem;
   }
 }
 
