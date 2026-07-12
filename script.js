@@ -17,3 +17,36 @@ toggle.addEventListener("click", () => {
 });
 
 document.getElementById("year").textContent = new Date().getFullYear();
+
+// Intro fade: the greeting slides up and fades out as you scroll past it.
+const introInner = document.querySelector(".intro-inner");
+const scrollCue = document.querySelector(".scroll-cue");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+if (introInner && !reduceMotion.matches) {
+  let ticking = false;
+
+  const update = () => {
+    const y = window.scrollY;
+    const progress = Math.min(1, y / (window.innerHeight * 0.55));
+    introInner.style.opacity = String(1 - progress);
+    introInner.style.transform = `translateY(${-y * 0.25}px)`;
+    if (scrollCue && y > 0) {
+      // Kill the entrance/bob animations; their fill would override this fade.
+      scrollCue.style.animation = "none";
+      scrollCue.style.opacity = String(Math.max(0, 1 - progress * 2));
+    }
+    ticking = false;
+  };
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    },
+    { passive: true }
+  );
+}

@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fazle Rasool Mohammed — Software Portfolio</title>
-  <meta name="description" content="Portfolio of Fazle Rasool Mohammed — CS student in Chicago building full-stack tools: a trading analytics platform and an AI code-review bot.">
-  <meta property="og:title" content="Fazle Rasool Mohammed — Software Portfolio">
-  <meta property="og:description" content="Full-stack projects: AlphaLab (trading analytics platform) and ACROBOT (AI code-review GitHub Action).">
+  <title>Fazle Rasool Mohammed</title>
+  <meta name="description" content="Portfolio of Fazle Rasool Mohammed. CS student in Chicago. Built AlphaLab and ACROBOT.">
+  <meta property="og:title" content="Fazle Rasool Mohammed">
+  <meta property="og:description" content="CS student in Chicago. Built AlphaLab (trading analytics) and ACROBOT (AI code review bot).">
   <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232557d6'/%3E%3Ctext x='16' y='22.5' font-family='-apple-system,sans-serif' font-size='17' font-weight='700' fill='white' text-anchor='middle'%3EFR%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231414b4'/%3E%3Ctext x='16' y='22.5' font-family='-apple-system,sans-serif' font-size='17' font-weight='700' fill='white' text-anchor='middle'%3EFR%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
   <script>
     // Set theme before first paint to avoid a flash of the wrong scheme.
@@ -24,10 +24,8 @@
   <header class="site-header">
     <a class="site-name" href="#top">Fazle Rasool Mohammed</a>
     <nav class="site-nav" aria-label="Site">
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <a href="#projects">projects</a>
+      <a href="#contact">contact</a>
       <button id="theme-toggle" type="button" aria-label="Toggle dark mode">
         <svg class="icon-sun" aria-hidden="true" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <circle cx="12" cy="12" r="4.5"/>
@@ -40,64 +38,41 @@
     </nav>
   </header>
 
-  <main id="top">
-    <section class="hero">
-      <h1>I build software end to end — and my projects review each other.</h1>
-      <p class="lede">
-        I'm a computer science student in Chicago. I shipped a full-stack trading
-        analytics platform, then built an AI code-review bot that now reviews
-        every pull request that platform merges.
+  <section class="intro" id="top">
+    <div class="intro-inner">
+      <h1>hi, i'm <span class="accent">fazle</span>.</h1>
+      <p>
+        cs student at oakton college in chicago. i build things end to end,
+        ship them, and i'm looking for summer 2027 swe internships.
       </p>
-      <p class="hero-meta">
-        Computer Science @ Oakton College · Chicago, IL · Seeking Summer 2027 software engineering internships
+      <p class="intro-links">
+        <a class="button button-primary" href="mailto:fazlerasul1@gmail.com">email me</a>
+        <a class="button" href="https://github.com/FazleRas">github</a>
       </p>
-      <p class="hero-links">
-        <a class="button" href="https://github.com/FazleRas">GitHub</a>
-        <a class="button" href="mailto:fazlerasul1@gmail.com">Email me</a>
-      </p>
-    </section>
+    </div>
+    <a class="scroll-cue" href="#projects" aria-label="Scroll to projects">&darr;</a>
+  </section>
 
+  <main>
     <section id="projects" class="section">
-      <h2 class="section-label">Projects</h2>
+      <h2 class="section-label">projects</h2>
 
       <article class="project">
         <div class="project-head">
           <h3>AlphaLab</h3>
           <span class="project-links">
-            <a href="https://alphalab-lime.vercel.app">Live demo</a>
-            <a href="https://github.com/FazleRas/AlphaLab">Code</a>
+            <a href="https://alphalab-lime.vercel.app">live demo</a>
+            <a href="https://github.com/FazleRas/AlphaLab">code</a>
           </span>
         </div>
         <p>
-          Full-stack trading analytics platform: real-time quotes, technical
-          indicators computed from scratch in pandas, a multi-ticker signal
-          scanner, and a multi-strategy backtesting engine with equity curves,
-          benchmark overlays, and risk metrics (CAGR, Sharpe ratio, max drawdown).
+          a trading analytics platform. real time data, signal scanning, and a
+          backtester with parameter sweeps and out of sample validation.
+          live and deployed.
         </p>
-        <ul>
-          <li>
-            Parameter sweeps run an RSI-threshold grid in one request and render
-            it as a heatmap — with one-click <strong>out-of-sample validation</strong>:
-            optimize on the first 70% of history, then re-test the winners blind
-            on the held-out 30%.
-          </li>
-          <li>
-            Per-user watchlists and saved backtests behind Supabase auth — JWT
-            verification in FastAPI plus Postgres row-level security as
-            defense-in-depth.
-          </li>
-          <li>
-            Optional <strong>Redis market-data cache</strong> in front of yfinance that
-            fails open when Redis is down and reports hit/miss stats.
-          </li>
-          <li>
-            Deployed and live: React + Tailwind frontend on Vercel, Dockerized
-            FastAPI backend on Render.
-          </li>
-        </ul>
         <p class="tags">
-          <span>Python</span><span>FastAPI</span><span>pandas</span><span>React</span>
-          <span>Tailwind</span><span>Supabase</span><span>Redis</span><span>Docker</span>
+          <span>Python</span><span>FastAPI</span><span>React</span>
+          <span>Supabase</span><span>Redis</span>
         </p>
       </article>
 
@@ -105,38 +80,16 @@
         <div class="project-head">
           <h3>ACROBOT</h3>
           <span class="project-links">
-            <a href="https://github.com/FazleRas/acrobot">Code</a>
+            <a href="https://github.com/FazleRas/acrobot">code</a>
           </span>
         </div>
         <p>
-          AI Code Review Org Bot — a GitHub Action that reviews pull-request
-          diffs with an LLM and posts inline comments, engineered so that being
-          wrong is cheap and being spammy is impossible.
+          a github action that reviews pull request diffs with an LLM and posts
+          inline comments. it reviews AlphaLab's PRs, and it caught 2/2 planted
+          bugs on day one.
         </p>
-        <ul>
-          <li>
-            Treats the LLM as <strong>untrusted input</strong>: output is
-            schema-validated JSON, and every finding's line anchor is verified
-            against the parsed diff before anything is posted.
-          </li>
-          <li>
-            Built around a hard constraint — the Gemini free tier. A two-clock
-            rate limiter (requests-per-minute window + daily budget) degrades to
-            a partial review instead of failing CI when the budget runs out.
-          </li>
-          <li>
-            Content-fingerprinted comments make re-runs idempotent across
-            force-pushes; 49 tests plus a precision/recall eval harness.
-          </li>
-          <li>
-            <strong>Dogfooded on AlphaLab</strong>: the bot reviews every pull
-            request to the platform above. Day one it caught 2/2 deliberately
-            planted bugs with exact counterexamples.
-          </li>
-        </ul>
         <p class="tags">
-          <span>Python</span><span>GitHub Actions</span><span>Gemini API</span>
-          <span>httpx</span><span>uv</span>
+          <span>Python</span><span>GitHub Actions</span><span>Gemini</span>
         </p>
       </article>
 
@@ -144,68 +97,30 @@
         <div class="project-head">
           <h3>TextDNA</h3>
           <span class="project-links">
-            <a href="https://github.com/FazleRas/TextDNA">Code</a>
+            <a href="https://github.com/FazleRas/TextDNA">code</a>
           </span>
         </div>
-        <p>A browser tool that analyzes your typing style.</p>
-        <p class="tags"><span>JavaScript</span><span>HTML</span></p>
+        <p>a browser tool that analyzes your typing style.</p>
+        <p class="tags"><span>JavaScript</span></p>
       </article>
 
       <p class="more-link">
-        <a href="https://github.com/FazleRas?tab=repositories">More on GitHub →</a>
-      </p>
-    </section>
-
-    <section id="skills" class="section">
-      <h2 class="section-label">Skills</h2>
-      <dl class="skills">
-        <div>
-          <dt>Languages</dt>
-          <dd>Python, JavaScript, SQL, Java</dd>
-        </div>
-        <div>
-          <dt>Backend</dt>
-          <dd>FastAPI, PostgreSQL (Supabase), Redis, pandas</dd>
-        </div>
-        <div>
-          <dt>Frontend</dt>
-          <dd>React, Tailwind CSS, Recharts</dd>
-        </div>
-        <div>
-          <dt>Tools &amp; infra</dt>
-          <dd>Docker, GitHub Actions, Git, uv, httpx</dd>
-        </div>
-      </dl>
-    </section>
-
-    <section id="about" class="section">
-      <h2 class="section-label">About</h2>
-      <p>
-        I'm a computer science student at Oakton College in Chicago. I like
-        owning the whole stack — designing the API, wiring the database and
-        auth, building the UI, writing the tests, and deploying it where people
-        can actually use it.
-      </p>
-      <p>
-        My two main projects feed each other: ACROBOT reviews every pull request
-        AlphaLab merges. That loop keeps me honest on both sides — the bot has
-        to be precise enough to trust, and the platform code has to survive
-        review.
+        <a href="https://github.com/FazleRas?tab=repositories">more on github &rarr;</a>
       </p>
     </section>
 
     <section id="contact" class="section">
-      <h2 class="section-label">Contact</h2>
+      <h2 class="section-label">contact</h2>
       <p>
-        The fastest way to reach me is email:
-        <a href="mailto:fazlerasul1@gmail.com">fazlerasul1@gmail.com</a>.
-        I'm also on <a href="https://github.com/FazleRas">GitHub</a>.
+        <a href="mailto:fazlerasul1@gmail.com">fazlerasul1@gmail.com</a>
+        &nbsp;·&nbsp;
+        <a href="https://github.com/FazleRas">github.com/FazleRas</a>
       </p>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p>© <span id="year">2026</span> Fazle Rasool Mohammed · Built with plain HTML &amp; CSS · <a href="https://github.com/FazleRas/fazleras.github.io">View source</a></p>
+    <p>© <span id="year">2026</span> Fazle Rasool Mohammed · <a href="https://github.com/FazleRas/fazleras.github.io">view source</a></p>
   </footer>
 
   <script src="script.js"></script>

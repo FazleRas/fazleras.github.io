@@ -4,7 +4,8 @@
   --bg: #ffffff;
   --text: #1a1d23;
   --muted: #5c6470;
-  --accent: #2557d6;
+  --accent: #1414b4;
+  --accent-fg: #ffffff;
   --border: #e5e7eb;
   --tag-bg: #f3f4f6;
 
@@ -16,7 +17,8 @@
     --bg: #0f1115;
     --text: #e6e8ec;
     --muted: #9aa3b2;
-    --accent: #8caaff;
+    --accent: #9a9dff;
+    --accent-fg: #0f1115;
     --border: #262b35;
     --tag-bg: #1a1f29;
 
@@ -28,7 +30,8 @@
   --bg: #ffffff;
   --text: #1a1d23;
   --muted: #5c6470;
-  --accent: #2557d6;
+  --accent: #1414b4;
+  --accent-fg: #ffffff;
   --border: #e5e7eb;
   --tag-bg: #f3f4f6;
 
@@ -39,7 +42,8 @@
   --bg: #0f1115;
   --text: #e6e8ec;
   --muted: #9aa3b2;
-  --accent: #8caaff;
+  --accent: #9a9dff;
+  --accent-fg: #0f1115;
   --border: #262b35;
   --tag-bg: #1a1f29;
 
@@ -54,12 +58,18 @@
 
 html {
   scroll-behavior: smooth;
+  border-top: 4px solid var(--accent);
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-fg);
 }
 
 body {
@@ -172,36 +182,38 @@ h3 {
   }
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Intro ---------- */
 
-.hero {
-  padding: 3.5rem 0 1rem;
+/* Fills the first screen minus the header; fades/slides up on scroll (script.js) */
+.intro {
+  position: relative;
+  min-height: calc(100svh - 6.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.hero h1 {
+.intro h1 {
   margin: 0 0 1rem;
-  font-size: clamp(1.75rem, 5vw, 2.5rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: clamp(2.5rem, 9vw, 4rem);
+  font-weight: 750;
+  letter-spacing: -0.03em;
 }
 
-.lede {
-  margin: 0 0 1rem;
-  font-size: 1.15rem;
-  color: var(--text);
-  max-width: 38rem;
+.intro h1 .accent {
+  color: var(--accent);
 }
 
-.hero-meta {
+.intro p {
   margin: 0 0 1.75rem;
-  font-size: 0.95rem;
+  font-size: 1.15rem;
   color: var(--muted);
+  max-width: 32rem;
 }
 
-.hero-links {
+.intro-links {
   display: flex;
   gap: 0.75rem;
-  margin: 0;
 }
 
 .button {
@@ -221,6 +233,77 @@ h3 {
   color: var(--accent);
 }
 
+.button-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-fg);
+}
+
+.button-primary:hover,
+.button-primary:focus-visible {
+  color: var(--accent-fg);
+  opacity: 0.88;
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  translate: -50% 0;
+  color: var(--muted);
+  font-size: 1.3rem;
+}
+
+.scroll-cue:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+
+/* Entrance: greeting rises in on load, staggered */
+@media (prefers-reduced-motion: no-preference) {
+  .intro-inner > * {
+    opacity: 0;
+    animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .intro-inner > *:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  .intro-inner > *:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  .scroll-cue {
+    opacity: 0;
+    animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards,
+      bob 2.2s ease-in-out 1.6s infinite;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(6px);
+  }
+}
+
 /* ---------- Sections ---------- */
 
 .section {
@@ -233,13 +316,13 @@ h3 {
   font-weight: 650;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--accent);
 }
 
 /* ---------- Projects ---------- */
 
 .project {
-  padding: 1.75rem 0;
+  padding: 1.5rem 0;
   border-top: 1px solid var(--border);
 }
 
@@ -265,23 +348,15 @@ h3 {
 }
 
 .project p {
-  margin: 0.75rem 0 0;
-}
-
-.project ul {
-  margin: 0.75rem 0 0;
-  padding-left: 1.2rem;
-}
-
-.project li {
-  margin-top: 0.45rem;
+  margin: 0.6rem 0 0;
+  max-width: 38rem;
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
-  margin-top: 1.1rem !important;
+  margin-top: 1rem !important;
 }
 
 .tags span {
@@ -294,53 +369,10 @@ h3 {
 }
 
 .more-link {
-  margin: 1.5rem 0 0;
-  padding-top: 1.5rem;
+  margin: 1.25rem 0 0;
+  padding-top: 1.25rem;
   border-top: 1px solid var(--border);
   font-size: 0.95rem;
-}
-
-/* ---------- Skills ---------- */
-
-.skills {
-  margin: 0;
-  display: grid;
-  gap: 0.9rem;
-}
-
-.skills div {
-  display: grid;
-  grid-template-columns: 9rem 1fr;
-  gap: 1rem;
-  align-items: baseline;
-}
-
-.skills dt {
-  font-size: 0.85rem;
-  font-weight: 650;
-  letter-spacing: 0.02em;
-  color: var(--muted);
-}
-
-.skills dd {
-  margin: 0;
-}
-
-@media (max-width: 480px) {
-  .skills div {
-    grid-template-columns: 1fr;
-    gap: 0.1rem;
-  }
-}
-
-/* ---------- About / Contact ---------- */
-
-.section p {
-  max-width: 40rem;
-}
-
-.section p + p {
-  margin-top: 0.9rem;
 }
 
 /* ---------- Footer ---------- */
