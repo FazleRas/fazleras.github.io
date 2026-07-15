@@ -8,6 +8,7 @@
   --accent-fg: #ffffff;
   --border: #e5e7eb;
   --tag-bg: #f3f4f6;
+  --shadow: #e2e6f5;
 
   color-scheme: light;
 }
@@ -21,6 +22,7 @@
     --accent-fg: #ffffff;
     --border: #262b35;
     --tag-bg: #1a1f29;
+    --shadow: #1d2436;
 
     color-scheme: dark;
   }
@@ -34,6 +36,7 @@
   --accent-fg: #ffffff;
   --border: #e5e7eb;
   --tag-bg: #f3f4f6;
+  --shadow: #e2e6f5;
 
   color-scheme: light;
 }
@@ -46,6 +49,7 @@
   --accent-fg: #ffffff;
   --border: #262b35;
   --tag-bg: #1a1f29;
+  --shadow: rgba(59, 108, 255, 0.13);
 
   color-scheme: dark;
 }
@@ -213,6 +217,7 @@ h3 {
 
 .intro-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
 }
 
@@ -243,6 +248,26 @@ h3 {
 .button-primary:focus-visible {
   color: var(--accent-fg);
   opacity: 0.88;
+}
+
+.button-small {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.875rem;
+}
+
+/* Highlight badges: one small accent chip next to a title, used sparingly */
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  vertical-align: 0.15em;
+  margin-left: 0.35rem;
 }
 
 .scroll-cue {
@@ -333,11 +358,85 @@ h3 {
   color: var(--accent);
 }
 
+/* Print/robot insurance: never leave un-revealed sections invisible */
+@media print {
+  main .section {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ---------- Cards ---------- */
+
+/* Boxed groups with a flat solid shadow and an accent line. Used sparingly:
+   about, projects, and skills stay boxed; the timelines and contact don't. */
+.card {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 12px;
+  padding: 1.4rem 1.5rem;
+  background: var(--bg);
+  box-shadow: 0 4px 0 var(--shadow);
+}
+
+.card p:first-child {
+  margin-top: 0;
+}
+
+.card p:last-child {
+  margin-bottom: 0;
+}
+
+/* About: tinted card with room for a portrait */
+.about-card {
+  background: var(--tag-bg);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.about-photo {
+  width: 8.5rem;
+  height: 8.5rem;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+@media (max-width: 560px) {
+  .about-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 /* ---------- Projects ---------- */
 
 .project {
-  padding: 1.5rem 0;
-  border-top: 1px solid var(--border);
+  margin-bottom: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.project:hover {
+  border-color: var(--accent);
+  box-shadow: 0 6px 0 var(--shadow);
+  transform: translateY(-2px);
+}
+
+.project-points {
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.project-points li {
+  margin-top: 0.4rem;
+}
+
+.project-points li::marker {
+  color: var(--accent);
 }
 
 .project-head {
@@ -384,16 +483,45 @@ h3 {
 
 .more-link {
   margin: 1.25rem 0 0;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--border);
   font-size: 0.95rem;
 }
 
-/* ---------- Education / Activities ---------- */
+/* ---------- Experience & Education timeline ---------- */
+
+.timeline {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55rem;
+  bottom: 0.55rem;
+  width: 1px;
+  background: var(--border);
+}
 
 .entry {
-  padding: 1.25rem 0;
-  border-top: 1px solid var(--border);
+  position: relative;
+  padding: 0 0 1.5rem;
+}
+
+.entry:last-child {
+  padding-bottom: 0;
+}
+
+.entry::before {
+  content: "";
+  position: absolute;
+  left: -1.5rem;
+  top: 0.55rem;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  translate: -50% 0;
 }
 
 .entry-head {
@@ -432,8 +560,10 @@ h3 {
 
 .skill-card {
   border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
   border-radius: 12px;
   padding: 1.1rem 1.25rem 1.25rem;
+  box-shadow: 0 4px 0 var(--shadow);
 }
 
 .skill-card h3 {

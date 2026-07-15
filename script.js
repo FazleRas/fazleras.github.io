@@ -43,6 +43,21 @@ if ("IntersectionObserver" in window && !reduceMotion.matches) {
   sections.forEach((s) => s.classList.add("in-view"));
 }
 
+// Insurance: never leave content invisible when the reveal can't fire.
+// Skips the fade too; frozen renderers never finish a transition.
+const revealAll = () =>
+  sections.forEach((s) => {
+    s.style.transition = "none";
+    s.classList.add("in-view");
+  });
+
+// Headless renderers and background tabs (link-preview bots, screenshot
+// tools) throttle the observer and freeze transitions.
+if (document.hidden) revealAll();
+
+// Printing never scrolls, so un-revealed sections would print blank.
+window.addEventListener("beforeprint", revealAll);
+
 if (introInner && !reduceMotion.matches) {
   let ticking = false;
 
@@ -55,6 +70,10 @@ if (introInner && !reduceMotion.matches) {
       // Kill the entrance/bob animations; their fill would override this fade.
       scrollCue.style.animation = "none";
       scrollCue.style.opacity = String(Math.max(0, 1 - progress * 2));
+    }
+    // Reveal anything a fast jump scrolled past before it could intersect.
+    for (const s of sections) {
+      if (s.getBoundingClientRect().bottom < 0) s.classList.add("in-view");
     }
     ticking = false;
   };

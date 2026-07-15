@@ -28,6 +28,7 @@
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
+      <a class="button button-small" href="resume.pdf" download="Fazle_Rasool_Mohammed_Resume.pdf">Resume</a>
       <button id="theme-toggle" type="button" aria-label="Toggle dark mode">
         <svg class="icon-sun" aria-hidden="true" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <circle cx="12" cy="12" r="4.5"/>
@@ -58,22 +59,27 @@
   <main>
     <section id="about" class="section">
       <h2 class="section-label">About</h2>
-      <p>
-        I'm a computer science student at Oakton College in Chicago. To me,
-        building my own projects is a pastime. I love designing things end to
-        end, shipping them, and picking up a new skill every time. Right now
-        that means market data and developer tooling, and I'm looking for
-        summer 2027 software engineering internships. One day I hope to be
-        building software that people rely on every day.
-      </p>
+      <div class="card about-card">
+        <!-- Placeholder portrait; swap src for a real photo when ready -->
+        <img class="about-photo" src="https://picsum.photos/seed/fazle/400/400"
+          alt="Portrait of Fazle" width="400" height="400" loading="lazy">
+        <p>
+          I'm a computer science student at Oakton College in Chicago. To me,
+          building my own projects is a pastime. I love designing things end to
+          end, shipping them, and picking up a new skill every time. Right now
+          that means market data and developer tooling, and I'm looking for
+          summer 2027 software engineering internships. One day I hope to be
+          building software that people rely on every day.
+        </p>
+      </div>
     </section>
 
     <section id="projects" class="section">
       <h2 class="section-label">Projects</h2>
 
-      <article class="project">
+      <article class="project card">
         <div class="project-head">
-          <h3>AlphaLab</h3>
+          <h3>AlphaLab <span class="badge">1000+ tickers</span></h3>
           <span class="project-links">
             <a href="https://alphalab-lime.vercel.app">live demo</a>
             <a href="https://github.com/FazleRas/AlphaLab">code</a>
@@ -81,33 +87,64 @@
         </div>
         <p>
           A trading analytics platform. Real time data, signal scanning, and a
-          backtester with parameter sweeps and out of sample validation.
-          Live and deployed.
+          backtester with parameter sweeps and out of sample validation, plus
+          user accounts with watchlists and saved runs. Live and deployed.
         </p>
+        <ul class="project-points">
+          <li>
+            State machine backtesting engine scoring 4 strategies on Sharpe,
+            CAGR, max drawdown, and win rate, benchmarked against buy and hold
+            and SPY.
+          </li>
+          <li>
+            Parameter sweep optimizer that evaluates full RSI threshold grids
+            in one request and renders an interactive heatmap.
+          </li>
+          <li>
+            Out of sample validation with a 70/30 chronological split that
+            blind tests optimized parameters on held out data.
+          </li>
+        </ul>
         <p class="tags">
           <span>Python</span><span>FastAPI</span><span>React</span>
           <span>Supabase</span><span>Redis</span>
         </p>
       </article>
 
-      <article class="project">
+      <article class="project card">
         <div class="project-head">
-          <h3>ACROBOT</h3>
+          <h3>ACROBOT <span class="badge">2/2 planted bugs caught</span></h3>
           <span class="project-links">
             <a href="https://github.com/FazleRas/acrobot">code</a>
           </span>
         </div>
         <p>
-          A GitHub Action that reviews pull request diffs with an LLM and posts
-          inline comments. It reviews AlphaLab's PRs, and it caught 2/2 planted
-          bugs on day one.
+          A GitHub Action that reviews pull request diffs with an LLM and
+          posts inline comments, built around free tier rate limits. It
+          reviews AlphaLab's PRs and its own.
         </p>
+        <ul class="project-points">
+          <li>
+            Treats LLM output as untrusted input: schema validated JSON, with
+            every finding's line anchor verified against the parsed diff.
+          </li>
+          <li>
+            Two tier pipeline with a cheap model triage pass ahead of the
+            reasoning model, metered by a rate limiter that degrades to
+            partial reviews instead of failing CI.
+          </li>
+          <li>
+            24 unit tests plus per stage token, latency, and cost telemetry;
+            comment fingerprinting keeps re-runs idempotent across force
+            pushes.
+          </li>
+        </ul>
         <p class="tags">
           <span>Python</span><span>GitHub Actions</span><span>Gemini</span>
         </p>
       </article>
 
-      <article class="project">
+      <article class="project card">
         <div class="project-head">
           <h3>TextDNA</h3>
           <span class="project-links">
@@ -123,56 +160,54 @@
       </p>
     </section>
 
-    <section id="experience" class="section">
-      <h2 class="section-label">Experience</h2>
-      <article class="entry">
-        <div class="entry-head">
-          <h3>Oakton College · Financial Aid Student Employee</h3>
-          <span class="entry-meta">Oct 2025 - Present</span>
-        </div>
-        <p>
-          Support 50+ students weekly with financial aid, tuition, and
-          documentation questions, and maintain 200+ student records.
-        </p>
-      </article>
-    </section>
-
     <section id="education" class="section">
       <h2 class="section-label">Education</h2>
-      <article class="entry">
-        <div class="entry-head">
-          <h3>Oakton College</h3>
-          <span class="entry-meta">2025 - Present</span>
-        </div>
-        <p>
-          A.S. in Computer Science, expected 2026. Planned transfer for a B.S.
-          in Computer Science, spring 2027.
-        </p>
-      </article>
+      <div class="timeline">
+        <article class="entry">
+          <div class="entry-head">
+            <h3>University of Illinois Chicago · B.S. in Computer Science</h3>
+            <span class="entry-meta">Expected Dec 2028</span>
+          </div>
+          <p>Transferring spring 2027.</p>
+        </article>
+        <article class="entry">
+          <div class="entry-head">
+            <h3>Oakton College · A.S. in Computer Science <span class="badge">4.0 GPA</span></h3>
+            <span class="entry-meta">Expected Dec 2026</span>
+          </div>
+          <p>
+            Coursework in object oriented programming and data structures and
+            algorithms.
+          </p>
+        </article>
+      </div>
     </section>
 
-    <section id="activities" class="section">
-      <h2 class="section-label">Activities</h2>
-      <article class="entry">
-        <div class="entry-head">
-          <h3>Computer Science Honor Society</h3>
-          <span class="entry-meta">Aug 2021 - Jun 2025</span>
-        </div>
-        <p>
-          Helped organize two hackathons with 100+ participants and 5+
-          sponsors, and mentored peers in programming fundamentals.
-        </p>
-      </article>
-      <article class="entry">
-        <div class="entry-head">
-          <h3>Student Congress Debate</h3>
-          <span class="entry-meta">Aug 2021 - Jun 2023</span>
-        </div>
-        <p>
-          Qualified twice for Metrofinals, delivered 25+ speeches, and worked
-          on strategy and research with a 15-member team.
-        </p>
-      </article>
+    <section id="experience" class="section">
+      <h2 class="section-label">Experience &amp; Leadership</h2>
+      <div class="timeline">
+        <article class="entry">
+          <div class="entry-head">
+            <h3>Oakton College · Financial Aid Student Employee</h3>
+            <span class="entry-meta">Oct 2025 - Present</span>
+          </div>
+          <p>
+            Assist 60+ students weekly by phone and in person with financial
+            aid, tuition, and documentation, and maintain 250+ student
+            records.
+          </p>
+        </article>
+        <article class="entry">
+          <div class="entry-head">
+            <h3>Computer Science Honor Society</h3>
+            <span class="entry-meta">Aug 2021 - Jun 2025</span>
+          </div>
+          <p>
+            Co-organized two hackathons with 100+ total participants and
+            mentored peers through intro CS coursework.
+          </p>
+        </article>
+      </div>
     </section>
 
     <section id="skills" class="section">
@@ -188,23 +223,23 @@
         <div class="skill-card">
           <h3>Frameworks &amp; Libraries</h3>
           <p class="tags">
-            <span>React</span><span>FastAPI</span><span>Node.js</span>
-            <span>Express</span><span>pandas</span><span>Recharts</span>
+            <span>React</span><span>FastAPI</span><span>httpx</span>
+            <span>pytest</span><span>pandas</span>
           </p>
         </div>
         <div class="skill-card">
           <h3>Tools &amp; Platforms</h3>
           <p class="tags">
-            <span>Git</span><span>GitHub</span><span>Docker</span>
-            <span>PostgreSQL</span><span>Vercel</span><span>Render</span>
-            <span>Linux</span>
+            <span>Git</span><span>GitHub Actions</span><span>Docker</span>
+            <span>PostgreSQL</span><span>Supabase</span><span>Vercel</span>
+            <span>Render</span><span>Linux</span>
           </p>
         </div>
         <div class="skill-card">
           <h3>Concepts</h3>
           <p class="tags">
             <span>REST APIs</span><span>JWT Auth</span><span>Backtesting</span>
-            <span>Technical Indicators</span><span>Data Structures &amp; Algorithms</span>
+            <span>CI/CD</span><span>LLM Integration</span>
           </p>
         </div>
       </div>
@@ -212,10 +247,11 @@
 
     <section id="contact" class="section">
       <h2 class="section-label">Contact</h2>
-      <p>
-        <a href="mailto:fazlerasul1@gmail.com">fazlerasul1@gmail.com</a>
-        &nbsp;·&nbsp;
-        <a href="https://github.com/FazleRas">github.com/FazleRas</a>
+      <p class="intro-links">
+        <a class="button button-primary" href="mailto:fazlerasul1@gmail.com">Email me</a>
+        <a class="button" href="https://www.linkedin.com/in/fazle-rasool-m/">LinkedIn</a>
+        <a class="button" href="https://github.com/FazleRas">GitHub</a>
+        <a class="button" href="resume.pdf" download="Fazle_Rasool_Mohammed_Resume.pdf">Download resume</a>
       </p>
     </section>
   </main>
