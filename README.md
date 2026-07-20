@@ -1,11 +1,10 @@
 # fazleras.github.io
 
-Personal portfolio site — plain HTML, CSS, and a few lines of JS. No build
-step, no dependencies.
+Personal portfolio site built with HTML, CSS, and JS
 
-- `index.html` — all content
-- `styles.css` — design tokens (light/dark via CSS variables) + layout
-- `script.js` — theme toggle (persisted in localStorage) + footer year
+- `index.html`: all content
+- `styles.css`: design tokens (light/dark via CSS variables) + layout
+- `script.js`: theme toggle (persisted in localStorage) + footer year
 
 ## Run locally
 
@@ -18,4 +17,4 @@ python3 -m http.server 8080
 ## Deploy
 
 Hosted on GitHub Pages from the `main` branch of this repo
-(Settings → Pages → Deploy from branch → `main` / root).
+(Settings -> Pages -> Deploy from branch -> `main` / root).
