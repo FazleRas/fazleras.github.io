@@ -8,7 +8,7 @@
   <meta property="og:title" content="Fazle Rasool Mohammed">
   <meta property="og:description" content="CS student in Chicago. Built ACROBOT (AI code review bot), AlphaLab (trading analytics), and watersim (terminal water sim in C++).">
   <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231414b4'/%3E%3Ctext x='16' y='22.5' font-family='-apple-system,sans-serif' font-size='17' font-weight='700' fill='white' text-anchor='middle'%3EFR%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f3ed6'/%3E%3Ctext x='16' y='22.5' font-family='-apple-system,sans-serif' font-size='17' font-weight='700' fill='white' text-anchor='middle'%3EFR%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
   <script>
     // Set theme before first paint to avoid a flash of the wrong scheme.
@@ -42,7 +42,7 @@
     </nav>
   </header>
 
-  <section class="intro" id="top">
+  <section class="intro full-bleed" id="top">
     <div class="intro-inner">
       <h1>Hi, I'm <span class="accent">Fazle</span>.</h1>
       <p>
@@ -51,6 +51,7 @@
       </p>
       <p class="intro-links">
         <a class="button button-primary" href="mailto:fazlerasul1@gmail.com">Email me</a>
+        <a class="button" href="assets/resume.pdf">Resume</a>
         <a class="button" href="https://www.linkedin.com/in/fazle-rasool-m">LinkedIn</a>
         <a class="button" href="https://github.com/FazleRas">GitHub</a>
       </p>
@@ -61,6 +62,7 @@
   <main>
     <section id="about" class="section">
       <h2 class="section-label">About</h2>
+      <div class="card">
       <p>
         I'm a computer science student at Oakton College, transferring to the
         University of Illinois Chicago in spring 2027. To me, building my own
@@ -70,10 +72,17 @@
         software engineering internships. One day I hope to be building
         software that people rely on every day.
       </p>
+      </div>
     </section>
 
     <section id="projects" class="section">
-      <h2 class="section-label">Projects</h2>
+      <div class="banner full-bleed">
+        <h2 class="section-label">Projects</h2>
+        <p>
+          Three things I built end to end and still run. Two of them talk to
+          each other.
+        </p>
+      </div>
 
       <article class="project">
         <div class="project-head">
@@ -83,6 +92,10 @@
             <a href="https://github.com/FazleRas/acrobot/blob/main/docs/architecture.md">architecture</a>
           </span>
         </div>
+        <p class="lede">
+          An LLM code reviewer that runs inside CI on a free-tier quota and
+          catches real bugs — 2/2 deliberately planted, plus 2 nobody planted.
+        </p>
         <p>
           A GitHub Action that reviews pull request diffs with an LLM and posts
           inline comments. It runs on the Gemini free tier, so the scarce
@@ -126,6 +139,11 @@
             <a href="https://github.com/FazleRas/AlphaLab">code</a>
           </span>
         </div>
+        <p class="lede">
+          A trading analytics platform where the interesting part isn't the
+          backtester — it's the machinery that tells you when a backtest is
+          lying to you.
+        </p>
         <p>
           A full-stack trading analytics platform: 18 REST endpoints and 12
           React views behind JWT auth, per-user query scoping, and Postgres
@@ -173,6 +191,10 @@
             <a href="https://github.com/FazleRas/ascii-watersim">code</a>
           </span>
         </div>
+        <p class="lede">
+          A pond in your terminal. C++17, zero dependencies, and boat wakes
+          that show a real Doppler effect.
+        </p>
         <p>
           An interactive ASCII water simulator for the terminal, written in
           C++17 with zero dependencies. Click to splash, drive boats around,
@@ -321,6 +343,8 @@
       <h2 class="section-label">Contact</h2>
       <p>
         <a href="mailto:fazlerasul1@gmail.com">fazlerasul1@gmail.com</a>
+        &nbsp;&middot;&nbsp;
+        <a href="assets/resume.pdf">Resume</a>
         &nbsp;&middot;&nbsp;
         <a href="https://www.linkedin.com/in/fazle-rasool-m">LinkedIn</a>
         &nbsp;&middot;&nbsp;

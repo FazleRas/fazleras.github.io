@@ -2,25 +2,25 @@
 
 :root {
   --bg: #ffffff;
-  --text: #1a1d23;
-  --muted: #5c6470;
-  --accent: #1414b4;
+  --text: #141414;
+  --muted: #5e5e5e;
+  --accent: #0f3ed6;
   --accent-fg: #ffffff;
-  --border: #e5e7eb;
-  --tag-bg: #f3f4f6;
+  --border: #e2e2e2;
+  --tag-bg: #f4f4f4;
 
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0f1115;
-    --text: #e6e8ec;
-    --muted: #9aa3b2;
-    --accent: #3b6cff;
+    --bg: #070707;
+    --text: #ededed;
+    --muted: #a0a0a0;
+    --accent: #2f6dff;
     --accent-fg: #ffffff;
-    --border: #262b35;
-    --tag-bg: #1a1f29;
+    --border: #292929;
+    --tag-bg: #131313;
 
     color-scheme: dark;
   }
@@ -28,24 +28,24 @@
 
 :root[data-theme="light"] {
   --bg: #ffffff;
-  --text: #1a1d23;
-  --muted: #5c6470;
-  --accent: #1414b4;
+  --text: #141414;
+  --muted: #5e5e5e;
+  --accent: #0f3ed6;
   --accent-fg: #ffffff;
-  --border: #e5e7eb;
-  --tag-bg: #f3f4f6;
+  --border: #e2e2e2;
+  --tag-bg: #f4f4f4;
 
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --bg: #0f1115;
-  --text: #e6e8ec;
-  --muted: #9aa3b2;
-  --accent: #3b6cff;
+  --bg: #070707;
+  --text: #ededed;
+  --muted: #a0a0a0;
+  --accent: #2f6dff;
   --accent-fg: #ffffff;
-  --border: #262b35;
-  --tag-bg: #1a1f29;
+  --border: #292929;
+  --tag-bg: #131313;
 
   color-scheme: dark;
 }
@@ -59,6 +59,9 @@
 html {
   scroll-behavior: smooth;
   border-top: 4px solid var(--accent);
+  /* Full-bleed children below are sized in vw, which counts the scrollbar.
+     Without this they overflow by its width and add a horizontal scrollbar. */
+  overflow-x: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -182,15 +185,69 @@ h3 {
   }
 }
 
+/* ---------- Full bleed ---------- */
+
+/* Breaks an element out of the centered column to span the viewport, then
+   pads its content back into alignment with the column. */
+.full-bleed {
+  margin-inline: calc(-50vw + 50%);
+  padding-inline: calc(50vw - 50%);
+}
+
 /* ---------- Intro ---------- */
 
-/* Fills the first screen minus the header; fades/slides up on scroll (script.js) */
+/* Fills the first screen and runs up behind the header; fades/slides up on
+   scroll (script.js). Header height is 5.5rem: 3.5rem padding + 2rem toggle. */
 .intro {
   position: relative;
-  min-height: calc(100svh - 6.5rem);
+  min-height: 100svh;
+  margin-top: -5.5rem;
+  padding-top: 5.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-image: url("assets/hero-bg.svg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Scrim. Tuned per theme so body text keeps its normal colour and still
+   passes contrast — the image reads as texture, not as a photo to fight.
+   The skyline is already near-black, so dark mode barely needs one and the
+   city stays visible; light mode needs a heavy one to hold that dark image
+   back to a faint silhouette. */
+.intro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .intro::before {
+    background: rgba(7, 7, 7, 0.6);
+  }
+}
+
+:root[data-theme="dark"] .intro::before {
+  background: rgba(7, 7, 7, 0.6);
+}
+
+:root[data-theme="light"] .intro::before {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Lift the content above the scrim */
+.intro-inner,
+.scroll-cue {
+  position: relative;
+  z-index: 1;
+}
+
+/* Header sits over the hero image, so it needs to clear the scrim too */
+.site-header {
+  position: relative;
+  z-index: 2;
 }
 
 .intro h1 {
@@ -213,6 +270,7 @@ h3 {
 
 .intro-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
 }
 
@@ -333,6 +391,38 @@ h3 {
   color: var(--accent);
 }
 
+/* Full-width band introducing a section. Deliberately the only one on the
+   page — a second would cancel out the emphasis this one buys. */
+.banner {
+  margin-bottom: 2.25rem;
+  padding-block: 2.5rem;
+  background: var(--tag-bg);
+  border-block: 1px solid var(--border);
+}
+
+.banner .section-label {
+  margin-bottom: 0.6rem;
+}
+
+.banner p {
+  margin: 0;
+  max-width: 34rem;
+  color: var(--muted);
+}
+
+/* About, given its own weight */
+.card {
+  padding: 1.6rem 1.75rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--tag-bg);
+}
+
+.card p {
+  margin: 0;
+  max-width: none;
+}
+
 /* ---------- Projects ---------- */
 
 .project {
@@ -364,6 +454,23 @@ h3 {
 .project p {
   margin: 0.6rem 0 0;
   max-width: 38rem;
+}
+
+/* The banner's bottom border already opens the section; a second rule
+   immediately under it reads as a double line. */
+.project:first-of-type {
+  padding-top: 0;
+  border-top: none;
+}
+
+/* One-line hook. Someone skimming reads only these three sentences. */
+.project .lede {
+  margin-top: 0.9rem;
+  font-size: 1.1rem;
+  font-weight: 550;
+  line-height: 1.55;
+  max-width: 34rem;
+  text-wrap: pretty;
 }
 
 .tags {
