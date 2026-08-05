@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fazle Rasool Mohammed</title>
-  <meta name="description" content="Portfolio of Fazle Rasool Mohammed. CS student in Chicago. Built AlphaLab and ACROBOT.">
+  <meta name="description" content="Portfolio of Fazle Rasool Mohammed. CS student in Chicago, transferring to UIC. Built ACROBOT, AlphaLab, and watersim.">
   <meta property="og:title" content="Fazle Rasool Mohammed">
-  <meta property="og:description" content="CS student in Chicago. Built AlphaLab (trading analytics) and ACROBOT (AI code review bot).">
+  <meta property="og:description" content="CS student in Chicago. Built ACROBOT (AI code review bot), AlphaLab (trading analytics), and watersim (terminal water sim in C++).">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231414b4'/%3E%3Ctext x='16' y='22.5' font-family='-apple-system,sans-serif' font-size='17' font-weight='700' fill='white' text-anchor='middle'%3EFR%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
@@ -27,6 +27,8 @@
     <nav class="site-nav" aria-label="Site">
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
       <button id="theme-toggle" type="button" aria-label="Toggle dark mode">
         <svg class="icon-sun" aria-hidden="true" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -49,6 +51,7 @@
       </p>
       <p class="intro-links">
         <a class="button button-primary" href="mailto:fazlerasul1@gmail.com">Email me</a>
+        <a class="button" href="https://www.linkedin.com/in/fazle-rasool-m">LinkedIn</a>
         <a class="button" href="https://github.com/FazleRas">GitHub</a>
       </p>
     </div>
@@ -59,12 +62,13 @@
     <section id="about" class="section">
       <h2 class="section-label">About</h2>
       <p>
-        I'm a computer science student at Oakton College in Chicago. To me,
-        building my own projects is a pastime. I love designing things end to
-        end, shipping them, and picking up a new skill every time. Right now
-        that means market data and developer tooling, and I'm looking for
-        summer 2027 software engineering internships. One day I hope to be
-        building software that people rely on every day.
+        I'm a computer science student at Oakton College, transferring to the
+        University of Illinois Chicago in spring 2027. To me, building my own
+        projects is a pastime. I love designing things end to end, shipping
+        them, and picking up a new skill every time. Right now that means
+        market data and developer tooling, and I'm looking for summer 2027
+        software engineering internships. One day I hope to be building
+        software that people rely on every day.
       </p>
     </section>
 
@@ -73,49 +77,135 @@
 
       <article class="project">
         <div class="project-head">
-          <h3>AlphaLab</h3>
-          <span class="project-links">
-            <a href="https://alphalab-lime.vercel.app">live demo</a>
-            <a href="https://github.com/FazleRas/AlphaLab">code</a>
-          </span>
-        </div>
-        <p>
-          A trading analytics platform. Real time data, signal scanning, and a
-          backtester with parameter sweeps and out of sample validation.
-          Live and deployed.
-        </p>
-        <p class="tags">
-          <span>Python</span><span>FastAPI</span><span>React</span>
-          <span>Supabase</span><span>Redis</span>
-        </p>
-      </article>
-
-      <article class="project">
-        <div class="project-head">
           <h3>ACROBOT</h3>
           <span class="project-links">
             <a href="https://github.com/FazleRas/acrobot">code</a>
+            <a href="https://github.com/FazleRas/acrobot/blob/main/docs/architecture.md">architecture</a>
           </span>
         </div>
         <p>
           A GitHub Action that reviews pull request diffs with an LLM and posts
-          inline comments. It reviews AlphaLab's PRs, and it caught 2/2 planted
-          bugs on day one.
+          inline comments. It runs on the Gemini free tier, so the scarce
+          resource is request quota rather than money, and that constraint
+          shaped everything about the design.
+        </p>
+        <p>
+          Three rules run through the code. LLM output is untrusted input, so
+          every finding is schema-validated and every line anchor is checked
+          against the parsed diff before posting — GitHub rejects a review
+          whole if one anchor is bad, so a hallucinated line number costs one
+          finding instead of the run. Request budget is scarce, so diffs go
+          through a cheap triage model carrying 44&times; the review model's daily
+          quota (800 requests against 18), metered by a two-clock limiter that
+          posts a partial review instead of failing CI when the budget runs
+          out. And every run measures itself: per-stage tokens, latency, and
+          cost land in the Actions summary.
+        </p>
+        <p>
+          It caught 2/2 deliberately planted bugs plus 2 unplanned edge cases
+          across 11 pull requests on a live repo, with fixes merged. Backed by
+          63 tests and an eval harness that replays recorded API responses in
+          CI, so scores stay reproducible against a nondeterministic model.
+          Its own two false positives became the first eval cases.
+        </p>
+        <p class="note">
+          The live repo it reviews is <a href="#alphalab">AlphaLab</a>, below.
         </p>
         <p class="tags">
-          <span>Python</span><span>GitHub Actions</span><span>Gemini</span>
+          <span>Python</span><span>Gemini API</span><span>GitHub Actions</span>
+          <span>pytest</span><span>Pydantic</span>
+        </p>
+      </article>
+
+      <article class="project" id="alphalab">
+        <div class="project-head">
+          <h3>AlphaLab</h3>
+          <span class="project-links">
+            <a href="https://alphalab-lime.vercel.app/">live demo</a>
+            <a href="https://alphalab-backend.onrender.com/docs">API docs</a>
+            <a href="https://github.com/FazleRas/AlphaLab">code</a>
+          </span>
+        </div>
+        <p>
+          A full-stack trading analytics platform: 18 REST endpoints and 12
+          React views behind JWT auth, per-user query scoping, and Postgres
+          row-level security. I migrated the Dockerized backend from managed
+          hosting to AWS EC2 behind a Caddy reverse proxy with auto-renewing
+          TLS and security-group-scoped ports, which removed the free-tier cold
+          starts that stalled first requests.
+        </p>
+        <p>
+          The backtester is a state machine that races four strategies against
+          buy-and-hold and SPY on Sharpe ratio, CAGR, max drawdown, and win
+          rate. A parameter sweep re-simulates up to 121 RSI threshold pairs
+          per request with 70/30 chronological validation, guarded by a
+          regression test that fails if any signal reads a future bar. The
+          scanner derives nine signals across six combinable filters, with
+          per-ticker fault isolation so one bad symbol can't kill a scan.
+        </p>
+        <p>
+          The sweep heatmap is really an overfitting check. A whole region of
+          green cells points to a robust edge; a single green cell in a field
+          of red is curve-fitting to noise. Out-of-sample validation then
+          re-optimizes on the training window only and runs the top combos
+          blind on data they never saw. Metrics stay single-ticker with no
+          transaction costs and a 0% risk-free rate, so even a validated best
+          is a starting point for analysis, not a prediction.
+        </p>
+        <p>
+          Smaller things I like: a two-point chart measurement tool for the
+          move between any two points, backtests encoded in the query string so
+          a link opens straight to that run, CSV export of trade history,
+          pinned runs that reload in one click, and a Redis cache in front of
+          the market data feed that fails open and reports its own hit rate.
+        </p>
+        <p class="tags">
+          <span>Python</span><span>FastAPI</span><span>React</span>
+          <span>PostgreSQL</span><span>Docker</span><span>AWS EC2</span>
+          <span>Redis</span><span>Supabase</span><span>Vercel</span>
         </p>
       </article>
 
       <article class="project">
         <div class="project-head">
-          <h3>TextDNA</h3>
+          <h3>watersim</h3>
           <span class="project-links">
-            <a href="https://github.com/FazleRas/TextDNA">code</a>
+            <a href="https://github.com/FazleRas/ascii-watersim">code</a>
           </span>
         </div>
-        <p>A browser tool that analyzes your typing style.</p>
-        <p class="tags"><span>JavaScript</span></p>
+        <p>
+          An interactive ASCII water simulator for the terminal, written in
+          C++17 with zero dependencies. Click to splash, drive boats around,
+          watch the wakes ripple.
+        </p>
+        <pre class="ascii-art" aria-label="Screenshot of watersim running in a terminal, showing a boat on rippling ASCII water">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~..--~~.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~..~~
+~-~~-~..~~-~~.....~~~~~~-~-~-~-~-~~~~~.....~~~-~..=~
+~~~...~-=-~~......~.~.~.~.~.~.~.~.~.~.~.....~---~.~~
+~.~~..~-=--~~~~~............>..............~--=-~.~~
+~~~...~--=-~~~~~~..........................~-=--~.~~
+~~..~~~----~~.......~.~.~.~.~.~.~.~.~.......~---~~~~
+~~.~=-.~~~~....~~~~~~~~~~~~~~~~~~~~~~~~~....~~~..~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</pre>
+        <p>
+          The water is a height field sized to your terminal, stepped through a
+          two-buffer wave solver at 30 FPS. Each cell becomes the sum of its
+          four neighbours halved, minus its own previous value — that last term
+          is what gives ripples momentum, so waves travel outward instead of
+          diffusing in place, and damping lets the pond settle.
+        </p>
+        <p>
+          Input runs through raw-mode termios with SGR mouse reporting, and
+          each frame is rendered into one string and pushed with a single
+          <code>write()</code> syscall so it never tears. Because a moving boat
+          is a moving wave source, its wake compresses ahead and stretches
+          behind — a visible Doppler effect that fell out of the physics rather
+          than being drawn in. A <code>--demo</code> flag runs the whole thing
+          non-interactively as a smoke test.
+        </p>
+        <p class="tags">
+          <span>C++17</span><span>termios</span><span>Zero dependencies</span>
+        </p>
       </article>
 
       <p class="more-link">
@@ -127,12 +217,15 @@
       <h2 class="section-label">Experience</h2>
       <article class="entry">
         <div class="entry-head">
-          <h3>Oakton College · Financial Aid Student Employee</h3>
+          <h3>Oakton College &middot; Financial Aid Student Employee</h3>
           <span class="entry-meta">Oct 2025 - Present</span>
         </div>
         <p>
-          Support 50+ students weekly with financial aid, tuition, and
-          documentation questions, and maintain 200+ student records.
+          Built response flows for an Ivy.ai financial aid chatbot, triaging
+          wrong answers back into the FAQ knowledge base and retesting after
+          each change. Assist 60+ students weekly by phone and in person with
+          aid, tuition, and documentation, and keep 250+ records current across
+          Excel and internal systems.
         </p>
       </article>
     </section>
@@ -141,36 +234,46 @@
       <h2 class="section-label">Education</h2>
       <article class="entry">
         <div class="entry-head">
-          <h3>Oakton College</h3>
-          <span class="entry-meta">2025 - Present</span>
+          <h3>University of Illinois Chicago</h3>
+          <span class="entry-meta">Expected Dec 2028</span>
         </div>
         <p>
-          A.S. in Computer Science, expected 2026. Planned transfer for a B.S.
-          in Computer Science, spring 2027.
+          B.S. in Computer Science. Transferring in spring 2027.
+        </p>
+      </article>
+      <article class="entry">
+        <div class="entry-head">
+          <h3>Oakton College</h3>
+          <span class="entry-meta">Dec 2026</span>
+        </div>
+        <p>
+          A.S. in Computer Science, GPA 3.91/4.0. Coursework: Java data
+          structures and algorithms, differential equations, calculus I&ndash;III,
+          discrete math, linear algebra.
         </p>
       </article>
     </section>
 
-    <section id="activities" class="section">
-      <h2 class="section-label">Activities</h2>
+    <section id="leadership" class="section">
+      <h2 class="section-label">Leadership &amp; Community</h2>
       <article class="entry">
         <div class="entry-head">
-          <h3>Computer Science Honor Society</h3>
-          <span class="entry-meta">Aug 2021 - Jun 2025</span>
+          <h3>Computer Science Club, Co-President &middot; Oakton College</h3>
+          <span class="entry-meta">Aug 2026 - Present</span>
         </div>
         <p>
-          Helped organize two hackathons with 100+ participants and 5+
-          sponsors, and mentored peers in programming fundamentals.
+          Scoped a campus bus tracker into a technical spec and onboarded three
+          developers into parallel workflows.
         </p>
       </article>
       <article class="entry">
         <div class="entry-head">
-          <h3>Student Congress Debate</h3>
-          <span class="entry-meta">Aug 2021 - Jun 2023</span>
+          <h3>Computer Science Honor Society</h3>
+          <span class="entry-meta">Aug 2021 - May 2025</span>
         </div>
         <p>
-          Qualified twice for Metrofinals, delivered 25+ speeches, and worked
-          on strategy and research with a 15-member team.
+          Co-organized two hackathons with 100+ total participants and mentored
+          5+ peers.
         </p>
       </article>
     </section>
@@ -181,30 +284,34 @@
         <div class="skill-card">
           <h3>Languages</h3>
           <p class="tags">
-            <span>Python</span><span>Java</span><span>JavaScript</span>
-            <span>HTML/CSS</span><span>SQL</span>
-          </p>
-        </div>
-        <div class="skill-card">
-          <h3>Frameworks &amp; Libraries</h3>
-          <p class="tags">
-            <span>React</span><span>FastAPI</span><span>Node.js</span>
-            <span>Express</span><span>pandas</span><span>Recharts</span>
+            <span>Python</span><span>C++</span><span>Java</span>
+            <span>TypeScript</span><span>JavaScript</span><span>SQL</span>
+            <span>Bash</span><span>HTML/CSS</span>
           </p>
         </div>
         <div class="skill-card">
           <h3>Tools &amp; Platforms</h3>
           <p class="tags">
-            <span>Git</span><span>GitHub</span><span>Docker</span>
-            <span>PostgreSQL</span><span>Vercel</span><span>Render</span>
-            <span>Linux</span>
+            <span>AWS (EC2)</span><span>Docker</span><span>Linux</span>
+            <span>Git</span><span>GitHub Actions</span><span>PostgreSQL</span>
+            <span>Vercel</span><span>Supabase</span><span>Redis</span>
+            <span>Caddy</span>
+          </p>
+        </div>
+        <div class="skill-card">
+          <h3>Frameworks &amp; Libraries</h3>
+          <p class="tags">
+            <span>FastAPI</span><span>React</span><span>pandas</span>
+            <span>pytest</span><span>Pydantic</span><span>httpx</span>
+            <span>Tailwind</span>
           </p>
         </div>
         <div class="skill-card">
           <h3>Concepts</h3>
           <p class="tags">
-            <span>REST APIs</span><span>JWT Auth</span><span>Backtesting</span>
-            <span>Technical Indicators</span><span>Data Structures &amp; Algorithms</span>
+            <span>REST APIs</span><span>Async I/O</span><span>CI/CD</span>
+            <span>OOP</span><span>Rate Limiting</span><span>JWT Auth</span>
+            <span>Caching</span><span>LLM Evaluation</span><span>Backtesting</span>
           </p>
         </div>
       </div>
@@ -214,7 +321,9 @@
       <h2 class="section-label">Contact</h2>
       <p>
         <a href="mailto:fazlerasul1@gmail.com">fazlerasul1@gmail.com</a>
-        &nbsp;·&nbsp;
+        &nbsp;&middot;&nbsp;
+        <a href="https://www.linkedin.com/in/fazle-rasool-m">LinkedIn</a>
+        &nbsp;&middot;&nbsp;
         <a href="https://github.com/FazleRas">github.com/FazleRas</a>
       </p>
     </section>
