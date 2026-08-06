@@ -18,3 +18,5 @@ python3 -m http.server 8080
 
 Hosted on GitHub Pages from the `main` branch of this repo
 (Settings -> Pages -> Deploy from branch -> `main` / root).
+
+alternatively, just visit https://fazleras.github.io/
