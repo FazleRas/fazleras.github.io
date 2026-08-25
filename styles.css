@@ -220,7 +220,7 @@ h3 {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.87);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -234,7 +234,7 @@ h3 {
 }
 
 :root[data-theme="light"] .intro::before {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.87);
 }
 
 /* Lift the content above the scrim */
@@ -471,6 +471,31 @@ h3 {
   line-height: 1.55;
   max-width: 34rem;
   text-wrap: pretty;
+}
+
+/* Detail under each lede. Bulleted so the page can be skimmed instead of
+   read, and capped to the same measure as the prose above it. */
+.project-points {
+  margin: 0.7rem 0 0;
+  padding-left: 1.05rem;
+  max-width: 38rem;
+  list-style: none;
+}
+
+.project-points li {
+  position: relative;
+  margin-top: 0.5rem;
+}
+
+.project-points li::before {
+  content: "";
+  position: absolute;
+  left: -1.05rem;
+  top: 0.68em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
 }
 
 .tags {
