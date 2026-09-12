@@ -4,11 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fazle Rasool Mohammed</title>
-  <meta name="description" content="Portfolio of Fazle Rasool Mohammed. CS student in Chicago, transferring to UIC. Built ACROBOT, AlphaLab, and watersim.">
+  <meta name="description" content="Portfolio of Fazle Rasool Mohammed. CS student in Chicago, transferring to UIC. Built ACROBOT, AlphaLab, Read the Tape, and watersim.">
   <meta property="og:title" content="Fazle Rasool Mohammed">
-  <meta property="og:description" content="CS student in Chicago. Built ACROBOT (AI code review bot), AlphaLab (trading analytics), and watersim (terminal water sim in C++).">
+  <meta property="og:description" content="CS student in Chicago. Built ACROBOT (AI code review bot), AlphaLab (trading analytics), Read the Tape (a tape-reading game), and watersim (ASCII water in C++).">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f3ed6'/%3E%3Ctext x='16' y='22.5' font-family='-apple-system,sans-serif' font-size='17' font-weight='700' fill='white' text-anchor='middle'%3EFR%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
   <script>
     // Set theme before first paint to avoid a flash of the wrong scheme.
@@ -44,10 +47,14 @@
 
   <section class="intro full-bleed" id="top">
     <div class="intro-inner">
-      <h1>Hi, I'm <span class="accent">Fazle</span>.</h1>
-      <p>
-        Computer science student in Chicago. I build things end to end and
-        ship them.
+      <h1>Fazle Rasool <span class="accent">Mohammed</span></h1>
+      <p class="hero-lede">
+        I build software end to end and ship it. Developer tooling, market
+        data, and things that run in a terminal.
+      </p>
+      <p class="hero-meta">
+        Computer science student in Chicago &middot; looking for summer 2027
+        software engineering internships
       </p>
       <p class="intro-links">
         <a class="button button-primary" href="mailto:fazlerasul1@gmail.com">Email me</a>
@@ -62,24 +69,21 @@
   <main>
     <section id="about" class="section">
       <h2 class="section-label">About</h2>
-      <div class="card">
-      <p>
+      <p class="prose-lead">
         I'm a computer science student at Oakton College, transferring to the
-        University of Illinois Chicago in spring 2027. To me, building my own
-        projects is a pastime. I love designing things end to end, shipping
-        them, and picking up a new skill every time. Right now that means
-        market data and developer tooling, and I'm looking for summer 2027
-        software engineering internships. One day I hope to be building
-        software that people rely on every day.
+        University of Illinois Chicago in spring 2027. Building my own projects
+        is a pastime. I like designing things end to end, shipping them, and
+        picking up a new skill every time. Right now that means market data and
+        developer tooling. One day I hope to be building software that people
+        rely on every day.
       </p>
-      </div>
     </section>
 
     <section id="projects" class="section">
       <div class="banner full-bleed">
         <h2 class="section-label">Projects</h2>
         <p>
-          Three things I built end to end and still run. Two of them talk to
+          Four things I built end to end and still run. Two of them talk to
           each other.
         </p>
       </div>
@@ -96,29 +100,34 @@
           A GitHub Action that reviews pull request diffs with an LLM and
           leaves inline comments.
         </p>
-        <p>
-          It runs on the Gemini free tier, so the limit is request quota, not
-          money. Across 11 pull requests it found 2 planted bugs and 2 nobody
-          planted, and the fixes merged.
+        <p class="stats">
+          <span>11 pull requests reviewed</span>
+          <span>4 real bugs found</span>
+          <span>63 tests</span>
+          <span>Gemini free tier</span>
         </p>
+        <figure class="shot">
+          <img src="assets/shots/acrobot.png" width="960" height="480" loading="lazy" decoding="async"
+               alt="A GitHub pull request diff of market_data.py with an inline comment from github-actions[bot] flagging a possible ZeroDivisionError in the change_pct calculation, with a suggested fix.">
+          <figcaption>A review it left on a live pull request, anchored to the line it is about.</figcaption>
+        </figure>
         <ul class="project-points">
           <li>
-            Findings are schema-validated and line numbers checked against the
-            parsed diff first. GitHub rejects a whole review over one bad
-            anchor, so a made-up line costs one comment, not the run.
+            Findings are schema-validated and every line number is checked
+            against the parsed diff first. GitHub rejects a whole review over
+            one bad anchor, so a made-up line costs one comment, not the run.
           </li>
           <li>
-            A cheap triage model filters diffs before the reviewer sees them:
-            800 requests a day against the reviewer's 18.
-          </li>
-          <li>
+            A cheap triage model gates diffs before the reviewer sees them, on
+            its own quota pool: 800 requests a day against the reviewer's 18.
             When the quota runs out it posts a partial review instead of
             failing CI.
           </li>
           <li>
-            63 tests and an eval harness that replays recorded API responses,
-            so scores stay comparable. Tokens, latency, and cost per stage go
-            to the Actions summary.
+            An eval harness replays recorded API responses against labeled
+            cases, so recall and precision stay comparable across prompt
+            changes. Tokens, latency, and cost per stage go to the Actions
+            summary.
           </li>
         </ul>
         <p class="note">
@@ -143,42 +152,42 @@
           A trading analytics platform for backtesting strategies, sweeping
           parameters, and scanning for setups.
         </p>
-        <p>
-          18 REST endpoints and 12 React views behind JWT auth and Postgres
-          row-level security. Most of the work went into showing when a
-          good-looking backtest is just noise.
+        <p class="stats">
+          <span>18 REST endpoints</span>
+          <span>12 React views</span>
+          <span>JWT auth</span>
+          <span>Postgres row-level security</span>
         </p>
+        <figure class="shot">
+          <img src="assets/shots/alphalab.png" width="960" height="456" loading="lazy" decoding="async"
+               alt="AlphaLab parameter sweep heatmap: a grid of RSI buy and sell thresholds coloured red to green by total return, with a connected green region on the right and the best combination outlined.">
+          <figcaption>A sweep of RSI thresholds. A green region is an edge; one green cell would be noise.</figcaption>
+        </figure>
         <ul class="project-points">
           <li>
             The backtester races four strategies against buy-and-hold and SPY
-            on Sharpe ratio, CAGR, max drawdown, and win rate.
-          </li>
-          <li>
-            A sweep re-runs up to 121 RSI threshold pairs on a 70/30
-            chronological split, with a regression test that fails if any
+            on Sharpe ratio, CAGR, max drawdown, and win rate, over a 70/30
+            chronological split. A regression test fails the build if any
             signal reads a future bar.
           </li>
           <li>
-            The heatmap doubles as an overfitting check: a green region means
-            the edge holds, one green cell in a field of red means it was fit
-            to noise. Out-of-sample validation then re-optimizes on the
-            training window and runs the top combos blind.
+            The heatmap doubles as an overfitting check. Out-of-sample
+            validation then re-optimizes on the training window and runs the
+            top combinations blind on history they never saw, with a verdict
+            per combination.
           </li>
           <li>
-            The scanner derives nine signals across six combinable filters,
-            with per-ticker fault isolation so one bad symbol can't kill a
-            scan.
-          </li>
-          <li>
-            I moved the backend off managed hosting onto AWS EC2 behind Caddy
-            with auto-renewing TLS, which got rid of the cold starts. Redis
-            fronts the data feed and reports its own hit rate.
+            Sweeps run as background jobs, so a refresh reattaches and a shared
+            link opens straight to the progress. Redis fronts the data feed and
+            reports its own hit rate.
           </li>
         </ul>
         <p class="note">
-          Metrics are single-ticker, with no transaction costs and a 0%
-          risk-free rate, so a validated result is a place to start looking,
-          not a prediction.
+          Production runs on Render. Alongside it I built a self-managed AWS
+          EC2 deployment of the same container behind Caddy, with auto-renewing
+          Let's Encrypt TLS. Metrics are single-ticker, with no transaction
+          costs and a 0% risk-free rate, so a validated result is a place to
+          start looking, not a prediction.
         </p>
         <p class="tags">
           <span>Python</span><span>FastAPI</span><span>React</span>
@@ -187,49 +196,101 @@
         </p>
       </article>
 
-      <article class="project">
+      <article class="project" id="read-the-tape">
+        <div class="project-head">
+          <h3>Read the Tape</h3>
+          <span class="project-links">
+            <a href="https://fazleras.github.io/market-maker/">play it</a>
+            <a href="https://fazleras.github.io/market-maker/hard.html">hard mode</a>
+            <a href="https://github.com/FazleRas/market-maker">code</a>
+          </span>
+        </div>
+        <p class="lede">
+          A trading game in one HTML file. Headlines hit, the price moves, and
+          you decide: buy, sell, or stay flat.
+        </p>
+        <p class="stats">
+          <span>One file</span>
+          <span>No build</span>
+          <span>No backend</span>
+          <span>60-second rounds</span>
+        </p>
+        <figure class="shot">
+          <img src="assets/shots/market.jpg" width="960" height="719" loading="lazy" decoding="async"
+               alt="The Read the Tape start screen: a heads-up display with price, profit and loss, star rating, position and clock, over a price chart, with length and difficulty pickers and buy, flat and sell buttons.">
+          <figcaption>Pick a length and a mode. The heads-up display is the whole interface.</figcaption>
+        </figure>
+        <ul class="project-points">
+          <li>
+            Every switch pays the spread, 2 basis points of the price, so
+            reacting to every headline loses money on its own. Three modes
+            change how often a headline is a fakeout, a dud, or a real move
+            that quietly reverses with no news at all.
+          </li>
+          <li>
+            Scoring compares your P&amp;L against perfect hindsight on the same
+            price path: a trader who holds the true side of every move, is flat
+            in between, and pays the same spread. That ratio becomes a rating
+            from -5 to 5 stars.
+          </li>
+          <li>
+            Hard mode is the same idea with the training wheels off. You quote
+            a bid and an ask into a live order book with price-time priority,
+            against noise flow and an informed trader who sweeps your stale
+            quote 150 ms after the headline unless you pull it first.
+          </li>
+        </ul>
+        <p class="tags">
+          <span>JavaScript</span><span>Canvas</span><span>Matching engine</span>
+          <span>Zero dependencies</span>
+        </p>
+      </article>
+
+      <article class="project" id="watersim">
         <div class="project-head">
           <h3>watersim</h3>
           <span class="project-links">
+            <a href="https://fazleras.github.io/ascii-watersim/">play it</a>
             <a href="https://github.com/FazleRas/ascii-watersim">code</a>
           </span>
         </div>
         <p class="lede">
-          An interactive ASCII water simulator for the terminal. C++17, zero
-          dependencies.
+          An interactive ASCII water simulator. C++17 for the terminal, ported
+          to a single HTML file for the browser.
         </p>
-        <p>
-          Click to splash, drive boats around, watch the wakes ripple.
+        <p class="stats">
+          <span>Zero dependencies</span>
+          <span>~30 FPS</span>
+          <span>One write() per frame</span>
         </p>
-        <pre class="ascii-art" aria-label="Screenshot of watersim running in a terminal, showing a boat on rippling ASCII water">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-~..--~~.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~..~~
-~-~~-~..~~-~~.....~~~~~~-~-~-~-~-~~~~~.....~~~-~..=~
-~~~...~-=-~~......~.~.~.~.~.~.~.~.~.~.~.....~---~.~~
-~.~~..~-=--~~~~~............>..............~--=-~.~~
-~~~...~--=-~~~~~~..........................~-=--~.~~
-~~..~~~----~~.......~.~.~.~.~.~.~.~.~.......~---~~~~
-~~.~=-.~~~~....~~~~~~~~~~~~~~~~~~~~~~~~~....~~~..~~~
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</pre>
+        <figure class="shot">
+          <img src="assets/shots/watersim.png" width="960" height="486" loading="lazy" decoding="async"
+               alt="ASCII water rendered in blue and cyan characters, with two boats and their overlapping circular wakes interfering across the middle of the pond.">
+          <figcaption>Two boats, and the point where their wakes interfere.</figcaption>
+        </figure>
         <ul class="project-points">
           <li>
-            A height field sized to your terminal, stepped by a two-buffer wave
-            solver at 30 FPS. Each cell becomes half the sum of its neighbours
-            minus its own last value, and that subtraction is what gives
-            ripples momentum.
-          </li>
-          <li>
-            Raw-mode termios with SGR mouse reporting. Each frame renders into
-            one string and goes out in a single <code>write()</code>, so it
-            never tears.
+            A height field over two buffers. Each cell becomes half the sum of
+            its neighbours minus its own last value, and that subtraction is
+            what gives ripples momentum instead of letting them diffuse in
+            place.
           </li>
           <li>
             A moving boat is a moving wave source, so its wake bunches ahead
-            and stretches behind. The Doppler effect came out of the physics;
-            I didn't draw it in.
+            and stretches behind. The Doppler effect came out of the physics; I
+            didn't draw it in. Raw-mode termios gives the terminal build real
+            mouse input, and each frame goes out in a single
+            <code>write()</code>, so it never tears.
+          </li>
+          <li>
+            The browser build adds a double-slit preset: a wall with two
+            openings and a plane wave on the left. The interference pattern is
+            real, and it falls out of the same five-line update.
           </li>
         </ul>
         <p class="tags">
-          <span>C++17</span><span>termios</span><span>Zero dependencies</span>
+          <span>C++17</span><span>termios</span><span>JavaScript</span>
+          <span>Canvas</span><span>Zero dependencies</span>
         </p>
       </article>
 
@@ -305,59 +366,33 @@
 
     <section id="skills" class="section">
       <h2 class="section-label">Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-card">
-          <h3>Languages</h3>
-          <p class="tags">
-            <span>Python</span><span>C++</span><span>Java</span>
-            <span>TypeScript</span><span>JavaScript</span><span>SQL</span>
-            <span>Bash</span><span>HTML/CSS</span>
-          </p>
-        </div>
-        <div class="skill-card">
-          <h3>Tools &amp; Platforms</h3>
-          <p class="tags">
-            <span>AWS (EC2)</span><span>Docker</span><span>Linux</span>
-            <span>Git</span><span>GitHub Actions</span><span>PostgreSQL</span>
-            <span>Vercel</span><span>Supabase</span><span>Redis</span>
-            <span>Caddy</span>
-          </p>
-        </div>
-        <div class="skill-card">
-          <h3>Frameworks &amp; Libraries</h3>
-          <p class="tags">
-            <span>FastAPI</span><span>React</span><span>pandas</span>
-            <span>pytest</span><span>Pydantic</span><span>httpx</span>
-            <span>Tailwind</span>
-          </p>
-        </div>
-        <div class="skill-card">
-          <h3>Concepts</h3>
-          <p class="tags">
-            <span>REST APIs</span><span>Async I/O</span><span>CI/CD</span>
-            <span>OOP</span><span>Rate Limiting</span><span>JWT Auth</span>
-            <span>Caching</span><span>LLM Evaluation</span><span>Backtesting</span>
-          </p>
-        </div>
-      </div>
-    </section>
+      <dl class="skills">
+        <dt>Languages</dt>
+        <dd>Python, C++, Java, TypeScript, JavaScript, SQL, Bash, HTML/CSS</dd>
 
-    <section id="contact" class="section">
-      <h2 class="section-label">Contact</h2>
-      <p>
-        <a href="mailto:fazlerasul1@gmail.com">fazlerasul1@gmail.com</a>
-        &nbsp;&middot;&nbsp;
-        <a href="assets/resume.pdf">Resume</a>
-        &nbsp;&middot;&nbsp;
-        <a href="https://www.linkedin.com/in/fazle-rasool-m">LinkedIn</a>
-        &nbsp;&middot;&nbsp;
-        <a href="https://github.com/FazleRas">github.com/FazleRas</a>
-      </p>
+        <dt>Tools</dt>
+        <dd>AWS EC2, Docker, Linux, Git, GitHub Actions, PostgreSQL, Redis, Caddy, Vercel, Supabase</dd>
+
+        <dt>Frameworks</dt>
+        <dd>FastAPI, React, pandas, pytest, Pydantic, httpx, Tailwind</dd>
+
+        <dt>Concepts</dt>
+        <dd>REST APIs, async I/O, CI/CD, rate limiting, JWT auth, caching, LLM evaluation, backtesting</dd>
+      </dl>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <p>© <span id="year">2026</span> Fazle Rasool Mohammed · <a href="https://github.com/FazleRas/fazleras.github.io">view source</a></p>
+  <footer class="site-footer" id="contact">
+    <p class="footer-links">
+      <a href="mailto:fazlerasul1@gmail.com">fazlerasul1@gmail.com</a>
+      <a href="assets/resume.pdf">Resume</a>
+      <a href="https://www.linkedin.com/in/fazle-rasool-m">LinkedIn</a>
+      <a href="https://github.com/FazleRas">GitHub</a>
+    </p>
+    <p class="footer-meta">
+      © <span id="year">2026</span> Fazle Rasool Mohammed ·
+      <a href="https://github.com/FazleRas/fazleras.github.io">view source</a>
+    </p>
   </footer>
 
   <script src="script.js"></script>

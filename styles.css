@@ -8,6 +8,12 @@
   --accent-fg: #ffffff;
   --border: #e2e2e2;
   --tag-bg: #f4f4f4;
+  /* Screenshots are dark app UIs; they need a frame that reads as a frame in
+     both themes rather than dissolving into the page. */
+  --shot-frame: #d8d8d8;
+  --shot-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
+
+  --pad: 1.5rem;
 
   color-scheme: light;
 }
@@ -21,6 +27,8 @@
     --accent-fg: #ffffff;
     --border: #292929;
     --tag-bg: #131313;
+    --shot-frame: #2f2f2f;
+    --shot-shadow: none;
 
     color-scheme: dark;
   }
@@ -34,6 +42,8 @@
   --accent-fg: #ffffff;
   --border: #e2e2e2;
   --tag-bg: #f4f4f4;
+  --shot-frame: #d8d8d8;
+  --shot-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
 
   color-scheme: light;
 }
@@ -46,6 +56,8 @@
   --accent-fg: #ffffff;
   --border: #292929;
   --tag-bg: #131313;
+  --shot-frame: #2f2f2f;
+  --shot-shadow: none;
 
   color-scheme: dark;
 }
@@ -76,9 +88,12 @@ html {
 }
 
 body {
+  /* Positioned so the header can be absolutely placed over the hero; see
+     .site-header. */
+  position: relative;
   margin: 0 auto;
   max-width: 46rem;
-  padding: 0 1.5rem;
+  padding: 0 var(--pad);
   background: var(--bg);
   color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -105,16 +120,38 @@ a:focus-visible {
   border-radius: 2px;
 }
 
+/* Headings carry the site's voice; body text stays on the system stack so the
+   thing people actually read paints immediately. */
 h1,
 h2,
 h3 {
-  line-height: 1.25;
+  font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
   text-wrap: balance;
+}
+
+/* Small uppercase labels, dates and tags share one mono voice. */
+.section-label,
+.entry-meta,
+.stats,
+.tags span,
+.skills dt {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 /* ---------- Header ---------- */
 
+/* Absolutely placed over the hero. It used to sit in flow with the hero pulled
+   up under it by a fixed 5.5rem, which broke as soon as the nav wrapped to a
+   second row on a phone and the header grew past that figure. */
 .site-header {
+  position: absolute;
+  top: 0;
+  left: var(--pad);
+  right: var(--pad);
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -124,7 +161,10 @@ h3 {
 }
 
 .site-name {
-  font-weight: 650;
+  font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   color: var(--text);
 }
 
@@ -196,13 +236,14 @@ h3 {
 
 /* ---------- Intro ---------- */
 
-/* Fills the first screen and runs up behind the header; fades/slides up on
-   scroll (script.js). Header height is 5.5rem: 3.5rem padding + 2rem toggle. */
+/* Fills the first screen and runs up behind the header. The top padding clears
+   the header at its tallest (two rows on a narrow screen); the content is
+   centred in what is left, so a generous figure costs nothing. */
 .intro {
   position: relative;
   min-height: 100svh;
-  margin-top: -5.5rem;
-  padding-top: 5.5rem;
+  padding-top: 9rem;
+  padding-bottom: 4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -244,26 +285,26 @@ h3 {
   z-index: 1;
 }
 
-/* Header sits over the hero image, so it needs to clear the scrim too */
-.site-header {
-  position: relative;
-  z-index: 2;
-}
-
 .intro h1 {
   margin: 0 0 1rem;
-  font-size: clamp(2.5rem, 9vw, 4rem);
-  font-weight: 750;
-  letter-spacing: -0.03em;
+  font-size: clamp(2.35rem, 8vw, 3.75rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
 }
 
 .intro h1 .accent {
   color: var(--accent);
 }
 
-.intro p {
+.hero-lede {
+  margin: 0 0 0.75rem;
+  font-size: 1.2rem;
+  max-width: 32rem;
+}
+
+.hero-meta {
   margin: 0 0 1.75rem;
-  font-size: 1.15rem;
+  font-size: 0.95rem;
   color: var(--muted);
   max-width: 32rem;
 }
@@ -272,6 +313,7 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+  margin: 0;
 }
 
 .button {
@@ -325,11 +367,15 @@ h3 {
   }
 
   .intro-inner > *:nth-child(2) {
-    animation-delay: 0.15s;
+    animation-delay: 0.12s;
   }
 
   .intro-inner > *:nth-child(3) {
-    animation-delay: 0.3s;
+    animation-delay: 0.24s;
+  }
+
+  .intro-inner > *:nth-child(4) {
+    animation-delay: 0.36s;
   }
 
   .scroll-cue {
@@ -384,15 +430,16 @@ h3 {
 
 .section-label {
   margin: 0 0 1.5rem;
-  font-size: 0.8rem;
-  font-weight: 650;
-  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
 }
 
 /* Full-width band introducing a section. Deliberately the only one on the
-   page — a second would cancel out the emphasis this one buys. */
+   page, and now the only tinted block of any kind — a second would cancel out
+   the emphasis this one buys. */
 .banner {
   margin-bottom: 2.25rem;
   padding-block: 2.5rem;
@@ -410,23 +457,20 @@ h3 {
   color: var(--muted);
 }
 
-/* About, given its own weight */
-.card {
-  padding: 1.6rem 1.75rem;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--tag-bg);
-}
-
-.card p {
+/* About. Set larger than body copy and left unboxed, so weight comes from the
+   type rather than from another panel competing with the banner below it. */
+.prose-lead {
   margin: 0;
-  max-width: none;
+  max-width: 36rem;
+  font-size: 1.15rem;
+  line-height: 1.65;
+  text-wrap: pretty;
 }
 
 /* ---------- Projects ---------- */
 
 .project {
-  padding: 1.5rem 0;
+  padding: 2rem 0;
   border-top: 1px solid var(--border);
 }
 
@@ -440,8 +484,8 @@ h3 {
 
 .project h3 {
   margin: 0;
-  font-size: 1.3rem;
-  font-weight: 650;
+  font-size: 1.35rem;
+  font-weight: 600;
 }
 
 .project-links {
@@ -463,7 +507,7 @@ h3 {
   border-top: none;
 }
 
-/* One-line hook. Someone skimming reads only these three sentences. */
+/* One-line hook. Someone skimming reads only these four sentences. */
 .project .lede {
   margin-top: 0.9rem;
   font-size: 1.1rem;
@@ -473,10 +517,60 @@ h3 {
   text-wrap: pretty;
 }
 
-/* Detail under each lede. Bulleted so the page can be skimmed instead of
+/* Facts that would otherwise be buried in a bullet, at a glance. */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.1rem;
+  margin-top: 0.85rem !important;
+  font-size: 0.8rem;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+}
+
+.stats span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.stats span + span::before {
+  content: "";
+  width: 3px;
+  height: 3px;
+  margin-right: 1.1rem;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.65;
+}
+
+/* ---------- Screenshots ---------- */
+
+.shot {
+  margin: 1.4rem 0 0;
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--shot-frame);
+  border-radius: 10px;
+  box-shadow: var(--shot-shadow);
+  background: var(--tag-bg);
+}
+
+.shot figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 34rem;
+}
+
+/* Detail under each screenshot. Bulleted so the page can be skimmed instead of
    read, and capped to the same measure as the prose above it. */
 .project-points {
-  margin: 0.7rem 0 0;
+  margin: 1.1rem 0 0;
   padding-left: 1.05rem;
   max-width: 38rem;
   list-style: none;
@@ -484,7 +578,7 @@ h3 {
 
 .project-points li {
   position: relative;
-  margin-top: 0.5rem;
+  margin-top: 0.55rem;
 }
 
 .project-points li::before {
@@ -510,11 +604,10 @@ h3 {
   border-radius: 999px;
   background: var(--tag-bg);
   color: var(--muted);
-  font-size: 0.8rem;
-  font-weight: 550;
+  font-size: 0.78rem;
 }
 
-/* Cross-reference between two project cards */
+/* Caveats and cross-references between project cards */
 .note {
   font-size: 0.95rem;
   color: var(--muted);
@@ -528,29 +621,14 @@ code {
   background: var(--tag-bg);
 }
 
-/* watersim frame. Tight leading so the water reads as continuous; never
-   wraps (that would scramble the art), so it scrolls on narrow screens. */
-.ascii-art {
-  margin: 1.1rem 0 0;
-  padding: 0.9rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--tag-bg);
-  color: var(--muted);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: clamp(0.5rem, 1.9vw, 0.8rem);
-  line-height: 1.15;
-  overflow-x: auto;
-}
-
 .more-link {
-  margin: 1.25rem 0 0;
-  padding-top: 1.25rem;
+  margin: 1.75rem 0 0;
+  padding-top: 1.5rem;
   border-top: 1px solid var(--border);
   font-size: 0.95rem;
 }
 
-/* ---------- Education / Activities ---------- */
+/* ---------- Education / Experience / Activities ---------- */
 
 .entry {
   padding: 1.25rem 0;
@@ -568,12 +646,12 @@ code {
 .entry h3 {
   margin: 0;
   font-size: 1.05rem;
-  font-weight: 650;
+  font-weight: 600;
 }
 
 .entry-meta {
   color: var(--muted);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   white-space: nowrap;
 }
 
@@ -585,36 +663,47 @@ code {
 
 /* ---------- Skills ---------- */
 
-.skills-grid {
+/* A list, not four more panels. Every one of these already appears as a tag on
+   a project above, so the section only has to be legible, not decorated. */
+.skills {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  grid-template-columns: 8.5rem 1fr;
+  gap: 0.6rem 1.5rem;
+  margin: 0;
+  max-width: 40rem;
 }
 
-.skill-card {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.1rem 1.25rem 1.25rem;
+.skills dt {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 0.28em;
 }
 
-.skill-card h3 {
-  margin: 0 0 0.75rem;
-  font-size: 0.95rem;
-  font-weight: 650;
-}
-
-.skill-card .tags {
-  margin-top: 0 !important;
+.skills dd {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  text-wrap: pretty;
 }
 
 @media (max-width: 560px) {
-  .skills-grid {
+  .skills {
     grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+
+  .skills dd {
+    margin-bottom: 1rem;
   }
 }
 
 /* ---------- Footer ---------- */
 
+/* Also the contact section: the four links were previously duplicated in a
+   Contact block one screen above this. */
 .site-footer {
   margin-top: 4rem;
   padding: 1.75rem 0 2.5rem;
@@ -623,16 +712,85 @@ code {
   font-size: 0.875rem;
 }
 
-.site-footer p {
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+.footer-meta {
   margin: 0;
 }
 
-.site-footer a {
+.site-footer .footer-meta a {
   color: var(--muted);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.site-footer a:hover {
+.site-footer .footer-meta a:hover {
   color: var(--text);
+}
+
+/* ---------- Print ---------- */
+
+/* Sections start hidden and are revealed by an IntersectionObserver, which
+   never runs for a print or "Save as PDF": without this the page prints as a
+   hero and nothing else. */
+@media print {
+  :root.js main .section {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  html {
+    border-top: none;
+  }
+
+  body {
+    max-width: none;
+    font-size: 10.5pt;
+  }
+
+  .site-header,
+  .scroll-cue,
+  .banner,
+  .more-link {
+    display: none;
+  }
+
+  .intro {
+    min-height: 0;
+    padding: 0 0 1.5rem;
+    background-image: none;
+  }
+
+  .intro::before {
+    display: none;
+  }
+
+  /* script.js writes opacity and transform straight onto .intro-inner as you
+     scroll, so printing from halfway down the page would drop the name. */
+  .intro-inner {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .intro-inner > * {
+    animation: none;
+    opacity: 1;
+  }
+
+  /* Keep an entry and a screenshot whole; a whole project or section is taller
+     than a page, and asking to keep those together only opens large gaps. */
+  .entry,
+  .shot {
+    break-inside: avoid;
+  }
+
+  .shot img {
+    box-shadow: none;
+  }
 }
